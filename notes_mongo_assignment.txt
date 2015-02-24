@@ -1,0 +1,64 @@
+show db
+
+db
+
+use *db name*
+
+db.dropDatabase()
+
+show collections
+
+db.createCollection(*collection_name*)
+
+db.collection_name.drop()
+
+db.COLLECTION_NAME.insert({JSON_document})
+db.COLLECTION_NAME.insert({name: "Trey", belt: "black", status: "awesome"})
+
+db.collection.find({your_query_document})
+db.collection.find({name: "Trey"})
+	// ex. db.students.find( {$or: [ { home_state:"california"}, {home_state:"kentucky"} ] } )
+	// db.students.find( {lucky_number: { $gte:3 } } 
+	// db.students.find( {$and: [ {lucky_number: { $gte:1  }}, {lucky_number: {$lte:10} }  ] } )
+
+db.ninjas.find({_id: ObjectId("5462a78e514e258182f4c69a")})
+
+db.COLLECTION_NAME.remove({YOUR_QUERY_DOCUMENT}, BOOLEAN) // default is false
+db.COLLECTION_NAME.remove({YOUR_QUERY_DOCUMENT}, true) // true will only remove the first document in the query
+
+db.ninjas.update({name: "Trey"}, {$set: {location: "Mountain View"}})
+
+$push  	Push to an array contained within a document.
+$pop	Removes either the first or last element from an array.  Use 1 for the last item in 		the array, -1 for the first item.
+   		ex. db.COLLECTION.update({QUERY}, {$pop: {array_key: (1 or -1)}})
+$addToSet	Functions like $push.  However, $addToSet only adds to the specified array if 	the value doesn't already exist 
+$pull	Removes a specified value from an array, unlike $pop, which removes by location.  db.COLLECTION.update({QUERY}, {$pull: {array_key: VALUE}})
+
+#8
+// db.students.update({ }, { $set: { interests: ['coding', 'brunch', 'MongoDB'] } }, false,  true )
+
+#9
+// db.students.update( {name:"casey"}, {$push: {interests: { $each:["reading", "donuts"] }  } } )
+
+#10 add taxes to interest
+db.students.update( {name:"casey"}, {$push: {interests: { $each:["taxes"] }  } } )
+
+#11 remove taxes from interest
+db.students.update({name:"casey"}, {$pull: {interest: "taxes"}} )
+db.students.update({name:"casey"}, {$pull: {interest: "taxes"} }, { multi: true } )
+db.students.update({name:"casey"}, {$pull: {interests: "taxes"} })
+
+#12
+Remove all of the students from cali
+db.students.remove({"home_state" : "california"})
+
+#13
+Remove a user by name
+db.students.remove({name : "michael"})
+
+#14
+Remove student with lucky number greater than 5, just one
+db.students.remove({lucky_number : { $gt:5 }  })
+
+
+

@@ -1,0 +1,142 @@
+Get started with `help`
+To try out an interactive tutorial type `tutorial`
+> tutorial
+This shell is a (limited) javascript interpreter, so any commands you are familiar from javascript should work here.  Try out: 
+  var a = 5;
+  a * 10;
+  for(i=0; i<10; i++) { print('hello'); };
+You can move onto the next step anytime by typing `next` 
+> var a = 5;
+> a * 10
+50
+> for(i=0; i<10; i++) {print('hello');};
+hello
+hello
+hello
+hello
+hello
+hello
+hello
+hello
+hello
+hello
+9
+> next
+MongoDB is a document database. This means that we store data as documents, which are similar to JavaScript objects. Here below are a few sample JS objects:
+  var a = {age: 25};
+  var n = {name: 'Ed', languages: ['c', 'ruby', 'js']};
+  var student = {name: 'Jim', scores: [75, 99, 87.2]};
+Go ahead and create some documents, then enter 'next'
+> var student = {name: 'Jim', scores: [75, 99, 87.2]};
+> var a = {age: 25};
+> next
+Here's how you save a document to MongoDB:
+  db.scores.save({a: 99});
+This says, "save the document '{a: 99}' to the 'scores' collection.".
+To confirm that it's been saved properly:
+db.scores.find();
+> db.scores.save(a);
+WriteResult({ "nInserted" : 1 })
+> db.scores.find();
+{ "_id" : ObjectId("54eb61164069470d97630c6f"), "age" : 25 }
+> next
+Try adding some documents to the scores collection:
+  for(i=0; i<20; i++) { db.scores.save({a: i, exam: 5}) };
+Try that, then enter
+  db.scores.find();
+to see if the save succeeded. Since the shell only displays 10 results at time, you'll need to enter the 'it' command to iterate over the rest.
+> for(i=0; i<20; i++) { db.scores.save({a: i, exam: 5})};
+19
+> db.scores.find();
+{ "_id" : ObjectId("54eb61164069470d97630c6f"), "age" : 25 }
+{ "_id" : ObjectId("54eb619c1cdcaf474b8ffc9d"), "a" : 0, "exam" : 5 }
+{ "_id" : ObjectId("54eb619f1cdcaf474b8ffc9f"), "a" : 1, "exam" : 5 }
+{ "_id" : ObjectId("54eb61a21cdcaf474b8ffca1"), "a" : 2, "exam" : 5 }
+{ "_id" : ObjectId("54eb61a54069470d97630c7d"), "a" : 3, "exam" : 5 }
+{ "_id" : ObjectId("54eb61aa1cdcaf474b8ffca3"), "a" : 4, "exam" : 5 }
+{ "_id" : ObjectId("54eb61b01cdcaf474b8ffca5"), "a" : 5, "exam" : 5 }
+{ "_id" : ObjectId("54eb61b34069470d97630c81"), "a" : 6, "exam" : 5 }
+{ "_id" : ObjectId("54eb61bb4069470d97630c84"), "a" : 7, "exam" : 5 }
+{ "_id" : ObjectId("54eb61c81cdcaf474b8ffcac"), "a" : 8, "exam" : 5 }
+{ "_id" : ObjectId("54eb61d01cdcaf474b8ffcae"), "a" : 9, "exam" : 5 }
+{ "_id" : ObjectId("54eb61d51cdcaf474b8ffcb1"), "a" : 10, "exam" : 5 }
+{ "_id" : ObjectId("54eb61d91cdcaf474b8ffcb3"), "a" : 11, "exam" : 5 }
+{ "_id" : ObjectId("54eb61dc4069470d97630c8c"), "a" : 12, "exam" : 5 }
+{ "_id" : ObjectId("54eb61df4069470d97630c8e"), "a" : 13, "exam" : 5 }
+{ "_id" : ObjectId("54eb61e21cdcaf474b8ffcb5"), "a" : 14, "exam" : 5 }
+{ "_id" : ObjectId("54eb61ea1cdcaf474b8ffcb8"), "a" : 15, "exam" : 5 }
+{ "_id" : ObjectId("54eb61f24069470d97630c96"), "a" : 16, "exam" : 5 }
+{ "_id" : ObjectId("54eb61fa4069470d97630c99"), "a" : 17, "exam" : 5 }
+{ "_id" : ObjectId("54eb62021cdcaf474b8ffcbf"), "a" : 18, "exam" : 5 }
+Type "it" for more
+> it
+{ "_id" : ObjectId("54eb62094069470d97630c9e"), "a" : 19, "exam" : 5 }
+> next
+You've already tried a few queries, but let's make them more specific.
+Let's find all documents where a == 2:
+  db.scores.find({a: 2});
+Or we could find all documents where a > 15:
+  db.scores.find({a: {'$gt': 15}})
+> db.scores.find({a: 2});
+{ "_id" : ObjectId("54eb61a21cdcaf474b8ffca1"), "a" : 2, "exam" : 5 }
+> db.scores.find({a: {'$gt': 15}});
+{ "_id" : ObjectId("54eb61f24069470d97630c96"), "a" : 16, "exam" : 5 }
+{ "_id" : ObjectId("54eb61fa4069470d97630c99"), "a" : 17, "exam" : 5 }
+{ "_id" : ObjectId("54eb62021cdcaf474b8ffcbf"), "a" : 18, "exam" : 5 }
+{ "_id" : ObjectId("54eb62094069470d97630c9e"), "a" : 19, "exam" : 5 }
+> next
+`$gt` is one of many special query operators. Here are few others:
+  {a: {$lt: 5}} // Less Than
+  {a: {$gte: 10}} // Greater than or equal to
+  {a: {$ne: 'b'}} // Not Equal To
+  {a: {$in: ['a', 'b', 'c']}} // Exists in array
+Try out a few queries, before moving onto the next step.
+> next
+Now create a couple documents like these for updating:
+  db.users.insert({name: 'Johnny', languages: ['ruby', 'c']});
+  db.users.insert({name: 'Sue', languages: ['scala', 'lisp']});
+Confirm they were saved - with our favorite:
+  db.users.find()
+Update Johnny's name and languages: 
+  db.users.update({name: 'Johnny'}, {name: 'Cash', languages: ['English']});
+Use our favorite find query to inspect the resulting documents.  Notice that the array update overwrote Johnny's languages!
+Play with some more updates, before continuing on.
+> db.users.insert({name:'Johnny', languages: ['ruby', 'c']} );
+WriteResult({ "nInserted" : 1 })
+> db.users.find();
+{
+	"_id" : ObjectId("54eb64714069470d97630d3a"),
+	"languages" : [
+		"ruby",
+		"c"
+	],
+	"name" : "Johnny"
+}
+> db.users.update({name: 'Johnny'}, {name: 'Cash', languages: ['english']});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.users.find();
+{
+	"_id" : ObjectId("54eb64714069470d97630d3a"),
+	"languages" : [
+		"english"
+	],
+	"name" : "Cash"
+}
+> next
+Update has the sometimes unexpected behavior of replacing the entire document.  However, we can use update operators to only modify parts of our documents.
+Update Sue's languages without overwriting them:
+  db.users.update({name: 'Sue'}, { $addToSet: {languages: 'ruby'}});
+Or we can add a new field to Cash
+  db.users.update({name: 'Cash'}, {'$set': {'age': 50} });
+You can also push and pull items from arrays:
+  db.users.update({name: 'Sue'}, {'$push': {'languages': 'ruby'} });
+  db.users.update({name: 'Sue'}, {'$pull': {'languages': 'scala'} });
+Give these a try, check the results, and then enter 'next',
+> next
+To delete matching documents only, add a query selector to the remove method:
+  db.users.remove({name: 'Sue'});
+To delete everything from a collection:
+  db.scores.remove({});
+> next
+Congratulations! You've reached the end of this simple tutorial.
+Now take the next step with free MongoDB Online training at MongoDB University - university.mongodb.com!
