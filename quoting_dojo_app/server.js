@@ -6,16 +6,16 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/basic_mongoose');
 
-var UserSchema = new mongoose.Schema({
+var QuoteSchema = new mongoose.Schema({
 	name: String,
 	quote: String,
-	date: { type: Date, default: Date.now }
+	date: { type: Date, default: Date.now() }
 })
 
-UserSchema.path('name').required(true, 'name cannot be blank');
-UserSchema.path('quote').required(true, 'quote cannot be blank');
+QuoteSchema.path('name').required(true, 'name cannot be blank');
+QuoteSchema.path('quote').required(true, 'quote cannot be blank');
 
-var User = mongoose.model('User', UserSchema);
+var User_quote = mongoose.model('User_quote', QuoteSchema);
 
 //////////////////////////////////////////
 
@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
 
 app.post('/users', function(req, res) {
  //console.log("POST DATA", req.body);
-  var user = new User({name: req.body.name, quote: req.body.quote});
+  var user = new User_quote({name: req.body.name, quote: req.body.quote});
   user.save(function(err) {
     if(err) {
       // console.log('something went wrong');
@@ -53,7 +53,7 @@ app.post('/quotes_page', function(req, res) {
 })
 
 app.get('/users', function (req, res){
-	 User.find({}, function(err, users) {
+	User_quote.find({}).sort('-date').exec(function(err, users) {
 	 	if(err) {
       		console.log('something went wrong');
     	} else {
@@ -62,11 +62,20 @@ app.get('/users', function (req, res){
     		res.render('users', {users: users});
 	 	}
 	 })
+	 // User_quote.find({}, function(err, users) {
+	 // 	if(err) {
+  //     		console.log('something went wrong');
+  //   	} else {
+  //   		console.log("success", users);
+  //   		// res.render('users', {users: users});
+  //   		res.render('users', {users: users});
+	 // 	}
+	 // })
 })
 
 app.get('/users/:id', function (req, res){
 	// first parameter is the query document.  Second parameter is the callback
-	User.findOne({_id: req.params.id}, function (err, user){
+	User_quote.findOne({_id: req.params.id}, function (err, user){
 		// loads a viw called 'users.ejs' and passed the user object in the view
 		res.render('user', {user: user});
 	})
@@ -74,7 +83,7 @@ app.get('/users/:id', function (req, res){
 
 app.post('/users/:id', function (req, res){
 	// will not overwrite other fields
-	User.update({_id: req.params.id}, {first_name: 'Carlos'}, function (err, user){
+	User_quote.update({_id: req.params.id}, {first_name: 'Carlos'}, function (err, user){
 		res.redirect('/users');
 	})
 
