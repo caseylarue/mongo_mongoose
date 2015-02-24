@@ -1,0 +1,9 @@
+Quoting Dojo App
+
+Page	Story
+index	html to add name & quote
+index	add quote to db
+index	button to skip to quotes page
+
+quotes 	display quotes
+

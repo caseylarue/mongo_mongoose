@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>Quotes</title>
+	<style type="text/css">
+		label, input, textarea, button {
+			display: block;
+			margin: 20px;
+		}
+		textarea {
+			width: 400px;
+			height: 100px;
+		}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function (){
+ 			
+      })
+	</script>
+</head>
+<body>
+	<h1>Welcome to Quoting Dojo</h1>
+ 	<% if(typeof(users) != 'undefined' ) { %>
+	 	<% for(var x in users) { %>
+	  		<h3>Name: <%= users[x].name %></h3>
+	  		<h4>Quote: <%= users[x].quote %></h4>
+	  		<hr>
+	 	 <% } %>
+	<% }%>
+</body>
+</html>
