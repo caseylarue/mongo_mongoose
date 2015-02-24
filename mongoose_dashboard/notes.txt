@@ -1,0 +1,14 @@
+page	story
+
+index	display all mongooses on page load
+index	add show 
+index	add delete
+index	add edit
+
+
+mongooses/:id  			show - displays info about one mongoose
+
+mongooses/:id/edit		edit info for mongoose
+
+mongooses/:id/destroy 	destory info for mongoose
+
