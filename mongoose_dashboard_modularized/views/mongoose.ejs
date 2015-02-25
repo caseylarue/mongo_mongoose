@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Mongoose Dashboard</title>
+</head>
+<body>
+	<h1>Welcome to Mongoose Dashboard</h1>
+	<button><a href="/new">Add New</a></button>
+ 	<% if(typeof(mongoose_display) != 'undefined' ) { %>
+	 	<% for(var x in mongoose_display) { %>
+	 		<div>
+		  		<h3>Name: <a href="mongoose/<%= mongoose_display[x]._id %>"><%= mongoose_display[x].name %></a></h3>
+		  		<h4>Description: <%= mongoose_display[x].description %></h4>
+		  		<h4>Created at: <%= mongoose_display[x].created_at %></h4>
+
+		  		<% if(typeof(mongoose_display[x].updated_at) != 'undefined' ) { %>
+		  			<h4>Updated at: <%= mongoose_display[x].updated_at %></h4>
+		  		<% } %>
+
+		  		<button><a href="/mongoose/<%= mongoose_display[x].id %>">Show</a></button>
+		  		<button><a href="/mongoose/<%= mongoose_display[x].id %>/edit">Edit</a></button>
+		  		<form action="/mongoose/<%= mongoose_display[x].id %>/remove" method="post">
+		  			<button type="submit"><a>Remove</a></button>
+		  		</form>
+	  		</div>
+	  		<hr>
+	 	 <% } %>
+	<% }%>
+</body>
+</html>

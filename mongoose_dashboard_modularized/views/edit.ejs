@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Mongoose Edit</title>
+	<style type="text/css">
+		label, input, textarea, button {
+			display: block;
+			margin: 20px;
+		}
+		textarea {
+			width: 400px;
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Welcome to the Mongoose Edit Page</h1>
+	<button><a href="/">Back to Dashboard</a></button>
+	<form action="/mongoose/<%= mongoose_display.id %>" method="post">
+		<label>Name:</label>
+		<input name="name" value="<%= mongoose_display.name %>">
+		<label>Description:</label>
+		<textarea name="description"><%= mongoose_display.description %></textarea>
+		<button type="submit">Submit Changes</button>
+	</form>
+</body>
+</html>
